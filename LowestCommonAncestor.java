@@ -13,7 +13,7 @@ class Node {
     } 
 } 
   
-public class BT_NoParentPtr_Solution1  
+public class lowestCommonAncestor  
 { 
   
     Node root; 
@@ -84,7 +84,7 @@ public class BT_NoParentPtr_Solution1
     
     public static void main(String[] args) 
     { 
-        BT_NoParentPtr_Solution1 tree = new BT_NoParentPtr_Solution1(); 
+        lowestCommonAncestor tree = new lowestCommonAncestor(); 
         tree.root = new Node(1); 
         tree.root.left = new Node(2); 
         tree.root.right = new Node(3); 
