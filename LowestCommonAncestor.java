@@ -1,102 +1,139 @@
-// A O(n) solution to find LCA of two given values n1 and n2 
-import java.util.ArrayList; 
-import java.util.List; 
+import LowestCommonAncestor.Node;
+
+public class LowestCommonAncestor {
+
+	
+	 // Sourced LCA Algorithim and Binary Tree code from @awarde96
+	 
+	public Node head;
+	
+	// node class to represent nodes of binary tree with left, right and parent nodes + a key represented by a char
+	
+  public class Node{  
+		private char key;
+		public Node left, right, parent;
+		private int value;
+	}
+	
+	//Creates new binary tree with a head
   
-// Binary Tree node 
-class Node { 
-    int data; 
-    Node left, right; 
+	public void createHead(char key,int value){
+		Node head = new Node();
+		head.key = key;
+		head.left = null;
+		head.right = null;
+		head.value = value;
+		this.head = head;
+	}
+	
+	public char returnKey(Node node){
+		return node.key;
+	}
+	
+	public int returnValue(Node node){
+		return node.value;
+	}
+	
+	/* adds a node to the tree based on its 
+	key by recursively calling a private function */
   
-    Node(int value) { 
-        data = value; 
-        left = right = null; 
-    } 
-} 
+	public void addNode(char key, int value){
+		Node newNode = new Node();
+		newNode.key = key;
+		newNode.left = null;
+		newNode.right = null;	
+		newNode.value = value;
+		addNode(newNode, head);
+	}
+	
+	private void addNode(Node newNode, Node head){
+		if(newNode.key < head.key){
+			if(head.left == null){
+				head.left = newNode;
+				newNode.parent = head;
+			}
+			else{
+				addNode(newNode, head.left);
+			}
+		}
+		else{
+			if(head.right == null){
+				head.right = newNode;
+				newNode.parent = head;
+			}
+			else{
+				addNode(newNode, head.right);
+			}
+		}
+	}
+	
+	// returns a node given a key
   
-public class lowestCommonAncestor  
-{ 
-  
-    Node root; 
-    private List<Integer> path1 = new ArrayList<>(); 
-    private List<Integer> path2 = new ArrayList<>(); 
-  
-    // Finds the path from root node to given root of the tree. 
-    int findLCA(int n1, int n2) { 
-        path1.clear(); 
-        path2.clear(); 
-        return findLCAInternal(root, n1, n2); 
-    } 
-  
-    private int findLCAInternal(Node root, int n1, int n2) { 
-  
-        if (!findPath(root, n1, path1) || !findPath(root, n2, path2)) { 
-            System.out.println((path1.size() > 0) ? "n1 is present" : "n1 is missing"); 
-            System.out.println((path2.size() > 0) ? "n2 is present" : "n2 is missing"); 
-            return -1; 
-        } 
-  
-        int i; 
-        for (i = 0; i < path1.size() && i < path2.size(); i++) { 
-              
-        // System.out.println(path1.get(i) + " " + path2.get(i)); 
-            if (!path1.get(i).equals(path2.get(i))) 
-                break; 
-        } 
-  
-        return path1.get(i-1); 
-    } 
-      
-    // Finds path from root node to given root of the tree and stores the 
-    // path in a vector path[]. Returns true if path exists, returns false otherwise
-    
-    private boolean findPath(Node root, int n, List<Integer> path) 
-    { 
-        // base case 
-        if (root == null) { 
-            return false; 
-        } 
-          
-        // Store this node. The node will be removed if 
-        // not in path from root to n. 
-        
-        path.add(root.data); 
-  
-        if (root.data == n) { 
-            return true; 
-        } 
-  
-        if (root.left != null && findPath(root.left, n, path)) { 
-            return true; 
-        } 
-  
-        if (root.right != null && findPath(root.right, n, path)) { 
-            return true; 
-        } 
-  
-        // If not present in subtree rooted with root, remove root from 
-        // path[] and return false 
-        path.remove(path.size()-1); 
-  
-        return false; 
-    } 
-  
-    // Driver code 
-    
-    public static void main(String[] args) 
-    { 
-        lowestCommonAncestor tree = new lowestCommonAncestor(); 
-        tree.root = new Node(1); 
-        tree.root.left = new Node(2); 
-        tree.root.right = new Node(3); 
-        tree.root.left.left = new Node(4); 
-        tree.root.left.right = new Node(5); 
-        tree.root.right.left = new Node(6); 
-        tree.root.right.right = new Node(7); 
-  
-        System.out.println("LCA(4, 5): " + tree.findLCA(4,5)); 
-        System.out.println("LCA(4, 6): " + tree.findLCA(4,6)); 
-        System.out.println("LCA(3, 4): " + tree.findLCA(3,4)); 
-        System.out.println("LCA(2, 4): " + tree.findLCA(2,4)); 
-      
-    } 
-} 
+	public Node findNode(char key){
+		if(key == head.key){
+			return head;
+		}
+		else {
+			return findNode(key, head);
+		}
+	}
+	
+	private Node findNode(char key, Node head){
+		Node ret = null;
+		if(head.left != null){
+			if (head.left.key == key){
+				return head.left;
+			}
+			else{
+				ret = findNode(key, head.left);
+				if(ret != null){
+					return ret;
+				}
+			}
+		}
+		if(head.right != null){
+			if(head.right.key == key){
+				return head.right;
+			}
+			else{
+				ret = findNode(key, head.right);
+				if(ret != null){
+					return ret;
+				}
+			}
+		}
+		return null;
+	}
+	
+	public int depth(char key){
+		int depth = 0;
+		Node node = findNode(key);
+		while(node.parent != null){
+			depth++;
+			node = node.parent;
+		}
+		return depth;
+	}
+	
+	
+	// implementation of the LCA Algorithim 
+	public Node lowestCommonAncestor(Node root, Node p, Node q) {
+	    if(root==null)
+	        return null;
+	 
+	    if(root==p || root==q)
+	        return root;
+	 
+	    Node l = lowestCommonAncestor(root.left, p, q);
+	    Node r = lowestCommonAncestor(root.right, p, q);
+	 
+	    if(l!=null&&r!=null){
+	        return root;
+	    }else if(l==null&&r==null){
+	        return null;
+	    }else{
+	        return l==null?r:l;
+	    }
+	}
+
+}
