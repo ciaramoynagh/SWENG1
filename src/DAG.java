@@ -50,10 +50,6 @@ public class DAG
 			indegree[w]++;
 			E++;
 		}
-		else
-		{
-			System.out.println("Please enter numbers between 0 and " + (V-1));
-		}		
 	}
 	
 	private int validateVertex(int v)
