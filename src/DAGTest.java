@@ -179,17 +179,17 @@ public class DAGTest {
 	@Test
 	public void testForNonDAGInLCA()
 	{
-		DAG graph = new DAG(10);
+		DAG dag = new DAG(10);
 
-		graph.addEdge(0, 4);
-		graph.addEdge(0, 3);
-		graph.addEdge(4, 2);
-		graph.addEdge(4, 0);
-		graph.addEdge(2, 3);
+		dag.addEdge(0, 4);
+		dag.addEdge(0, 3);
+		dag.addEdge(4, 2);
+		dag.addEdge(4, 0);
+		dag.addEdge(2, 3);
 
-		assertEquals(-1, graph.findLCA(6, 5));
-		assertEquals(-1, graph.findLCA(3, 4));
-		assertEquals(-1, graph.findLCA(5, 3));
-		assertEquals(-1, graph.findLCA(1, 7));	
+		assertEquals(-1, dag.findLCA(6, 5));
+		assertEquals(-1, dag.findLCA(3, 4));
+		assertEquals(-1, dag.findLCA(5, 3));
+		assertEquals(-1, dag.findLCA(1, 7));	
 	}
 }
