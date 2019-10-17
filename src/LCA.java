@@ -1,5 +1,3 @@
-// sourced from geeks for geeks
-
 /* 
  * Java Program for Lowest Common Ancestor in a Binary Tree
  * A O(n) solution to find LCA of two given values n1 and n2 
