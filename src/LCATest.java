@@ -5,14 +5,13 @@ public class LCATest {
 
 	@Test
 	public void testEmpty() {
-		LCA.BT tree = new LCA.BT();
+		LCA.BT tree = new LCA.BT(); 
 		tree.root = null;
 
 		assertEquals("Null root will return -1", tree.findLCA(1,4), -1);
 		assertEquals("Null root will return -1", tree.findLCA(2,3), -1);
-
 	}
-
+	
 	@Test
 	public void testTwoNodes() {
 		LCA.BT tree = new LCA.BT();
@@ -51,5 +50,20 @@ public class LCATest {
 		assertEquals("LCA(3, 4) should be 3", tree.findLCA(6, 7), 3);
 
 	}
-}
+	
+	@Test
+	public void testNodeNotInTree() {
+		LCA.BT tree = new LCA.BT();
+		
+		tree.root = new LCA.Node(1);
+		tree.root.left = new LCA.Node(2);
+		tree.root.right = new LCA.Node(3);
+		tree.root.left.left = new LCA.Node(4); 
+		tree.root.left.right = new LCA.Node(5); 
+		tree.root.right.left = new LCA.Node(6); 
+		tree.root.right.right = new LCA.Node(7); 
 
+		assertEquals(-1, tree.findLCA(42,37));
+		assertEquals(-1, tree.findLCA(28,77));
+	}
+}
